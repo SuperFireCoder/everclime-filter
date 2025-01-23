@@ -8,7 +8,9 @@
   "features": {
     "ghcr.io/devcontainers/features/node:1": {},
     "ghcr.io/devcontainers/features/ruby:1": {},
-    "ghcr.io/devcontainers-contrib/features/postgres-asdf:1": {},
+    "ghcr.io/devcontainers-contrib/features/postgres-asdf:1": {
+      "VERSION": "15.3"
+    },
     "ghcr.io/devcontainers-contrib/features/asdf-package:1": {}
   },
   "customizations": {
@@ -37,13 +39,18 @@
     }
   },
   // Use 'postCreateCommand' to run commands after the container is created.
-  "postCreateCommand": "cd api && bundle"
-
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y libicu-dev && cd api && bundle",
+  
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // "forwardPorts": [],
 
-  // Configure tool-specific properties.
-  // "customizations": {},
+  // Configure SSH agent forwarding
+  "mounts": [
+    "type=bind,source=/home/qcif-dev/.ssh,target=/root/.ssh"
+  ],
+  "remoteEnv": {
+    "SSH_AUTH_SOCK": "/tmp/ssh-agent"
+  }
 
   // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
   // "remoteUser": "root"
