@@ -39,17 +39,20 @@
     }
   },
   // Use 'postCreateCommand' to run commands after the container is created.
-  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y libicu-dev && cd api && bundle",
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y libicu-dev && initdb -D ~/.asdf/installs/postgres/15.3/data && cd api && bundle",
   
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // "forwardPorts": [],
 
-  // Configure SSH agent forwarding
-  "mounts": [
-    "type=bind,source=/home/qcif-dev/.ssh,target=/root/.ssh"
-  ],
+  // Replace the postStartCommand with the correct PostgreSQL initialization
+  "postStartCommand": "pg_ctl start -D ~/.asdf/installs/postgres/15.3/data",
+
+  // Add environment variables for database connection
   "remoteEnv": {
-    "SSH_AUTH_SOCK": "/tmp/ssh-agent"
+    "DATABASE_URL": "postgresql://postgres:postgres@localhost:5432",
+    "POSTGRES_USER": "postgres",
+    "POSTGRES_PASSWORD": "postgres",
+    "POSTGRES_HOST": "localhost"
   }
 
   // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
