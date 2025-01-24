@@ -2,6 +2,7 @@ import reactLogo from "../assets/react.svg";
 import viteLogo from "../assets/vite.svg";
 import railsLogo from "../assets/rails.png";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import agent from "../app/api/agent";
 import LoadingComponent from "../components/LoadingComponent";
 import LoadingButton from "../components/LoadingButton";
@@ -12,6 +13,7 @@ const logoClasses = "hover:animate-wiggle-more hover:animate-infinite inline h-1
 export default function HomePage() {
   const [loading, setLoading] = useState(false);
   const [text, setText] = useState({ text: "" });
+  const navigate = useNavigate();
 
   function handleClick() {
     setLoading(true);
@@ -26,6 +28,10 @@ export default function HomePage() {
         error: "Error",
       },
     );
+  }
+
+  function handleNavigate() {
+    navigate("/impact-cards");
   }
 
   return (
@@ -52,13 +58,21 @@ export default function HomePage() {
                 <p>{text.text || "If you click the button below, this text will change."}</p>
               )}
             </div>
-            <LoadingButton
-              className="btn btn-primary"
-              handleClick={handleClick}
-              loading={loading}
-              loadingText="Loading..."
-              text="Make API request to backend"
-            />
+            <div className="flex gap-2">
+              <LoadingButton
+                className="btn btn-primary"
+                handleClick={handleClick}
+                loading={loading}
+                loadingText="Loading..."
+                text="Make API request to backend"
+              />
+              <button
+                className="btn btn-secondary"
+                onClick={handleNavigate}
+              >
+                Go to Impact Cards
+              </button>
+            </div>
           </div>
         </div>
       </div>
