@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { darkModeSlice } from "../components/darkModeSlice";
 import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
+import impactCardsReducer from '../features/impactCards/impactCardsSlice';
 
 export const store = configureStore({
   reducer: {
     darkMode: darkModeSlice.reducer,
+    impactCards: impactCardsReducer,
   },
 });
 
