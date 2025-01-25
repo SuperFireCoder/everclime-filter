@@ -42,22 +42,16 @@ git clone <repository-url>
 cd <repository-name>
 ```
 
-2. Build the Docker containers:
+2. Build and start the Docker containers:
 
 ```bash
-docker compose build
+docker compose up --build
 ```
 
-3. Setup the database:
+3. In a new terminal, set up the database:
 
 ```bash
 docker compose exec api rails db:setup
-```
-
-4. Start the application:
-
-```bash
-docker compose up
 ```
 
 The application will be available at:
